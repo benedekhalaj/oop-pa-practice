@@ -1,0 +1,54 @@
+@startuml
+
+class Farm {
+- plants: List<Plant>
+- totalFood: int
++ produceAMonth(): void
+- alterProduction(): void
+- rot(): boolean
+- getFood(): int
+}
+
+abstract Plant {
+# DEFAULT_PRODUCTION_RATE: int
+# productionRate: int
+# name: String
++ {abstract} alterProduction(): void
++ {abstract} produceFood(): int
+}
+
+abstract Evergreen {
+# MAXIMUM_PRODUCTION_RATE: int
+# LEAF_PRODUCTION_RATE: int
+# MONTHS_TO_PRODUCE_LEAF: int
+# currentMonth: int
+# growLeaves(): void
+}
+
+class Spruce {
+
+}
+class Almond
+class Juniper
+
+interface GrowMushroom {
++ growMushroom(): void
+}
+interface Rot {
++ rot(): boolean
+}
+
+Plant <|-- Evergreen
+Plant <|-- Almond
+
+Evergreen <|-- Spruce
+Evergreen <|-- Juniper
+
+Almond ..|> GrowMushroom
+Spruce ..|> GrowMushroom
+Almond ..|> Rot
+Spruce ..|> Rot
+
+Farm *-- Plant
+
+@enduml
