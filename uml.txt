@@ -1,0 +1,58 @@
+@startuml
+
+class ConcertOrganizer {
+- totalProfit: double
+- bands: Set<Band>
+- upcomingConcerts: List<Concert>
+- performedConcerts: List<Concert>
++ organizeConcert(): void
++ performConcert(): void
++ cancelOutdoorConcert(): void
+}
+
+class Concert {
+- mainBand: Band
+- warmUpBand: Band
+- type: ConcertType
+- ticketsSold: int
+- beersSold: int
++ getStyle(): Style
++ getCapacity(): int
++ getDuration(): int
++ getProfit(): double
++ cancel(reason: String)
++ sellTicket(): boolean
++ sellBeer(): void
+}
+
+enum ConcertType {
+INDOOR(3000, 90, 600),
+OUTDOOR(5000, 120, 800),
+FESTIVAL(8000, 360, 1000);
+
+- capacity: int
+- duration: int
+- beerPrice: int
+}
+
+class Band {
+- name: String
+- style: Style
+}
+
+enum Style {
+ROCK,
+POP,
+JAZZ
+}
+
+Concert *-- ConcertType
+Concert o-- ConcertOrganizer
+
+ConcertOrganizer o-- Band
+Concert o-- Band
+
+Band o-- Style
+
+
+@enduml
