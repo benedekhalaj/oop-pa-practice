@@ -1,0 +1,61 @@
+@startuml
+
+class Network {
+- devices: List<Device>
+}
+
+abstract Device {
+# age: int
+# batteryLife: int
++ calculateRemainingPower(): int
+}
+
+class Lightweight {
++ getLightweightDevicesCount: int
+}
+
+class Normal {
+- manufactureYear: Year
+}
+
+class Smart {
+- name: String
+}
+
+interface ScreenSize {
++ getScreenSize(): void
+}
+
+interface LightweightInfo {
++ getLightweightDeviceCount(): int
+}
+
+interface NormalInfo {
++ getNormalDevicesInBatteryRange(range: int): List<Normal>
+}
+
+enum ScreenType {
+EDTV(5),
+HD(10),
+FULL_HD(15),
+UHD(20);
+- screenSize: int
+}
+
+Device <|-- Lightweight
+Device <|-- Normal
+Device <|-- Smart
+
+LightweightInfo <|.. Network
+NormalInfo <|.. Network
+
+Network o-- Device
+
+Smart ..|> ScreenSize
+Normal ..|> ScreenSize
+
+LightweightInfo --o Lightweight
+NormalInfo --o Normal
+
+
+@enduml
