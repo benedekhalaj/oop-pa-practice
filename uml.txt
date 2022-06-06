@@ -1,0 +1,70 @@
+@startuml
+
+class TaxiCompany {
+- money: double
+- cars: Set<Car>
+- drivers: Set<Driver>
+- selfDrivingOutOfMaintance: boolean
++ simulateWeek(): void
+- maintainGasoileCars(): void
+- buyCars(): void
+- harvestIncome(): void
+}
+
+abstract Car {
+# MONEY_PER_PASSENGER: int
+# id: UUID
+# cost: int
+# passengersPerWeek: int
+}
+
+class GasolineUser {
++ COST: int
+- maintenceCost: double
+- driver: Driver
+}
+
+class Electric {
++ COST: int
+- driver: Driver
+}
+
+class SelfDriving {
++ COST: int
+}
+
+class Driver {
+- mobileNumber: int
+- name: String
+- age: int
+- salary: int
+- experience: Experience
+- phonebook: DriverPhonebook
+- getDriverPhoneNumbers(): List<Integer>
+}
+
+enum Experience {
+BEGINNER,
+ADVANCED,
+PROFESSIONAL
+
+- ridesPerWeek: int
+}
+
+interface DriverPhonebook {
++ getDriverMobileNumbers(): List<Integer>
+}
+
+
+DriverPhonebook <|.. TaxiCompany
+
+TaxiCompany o-- Car
+TaxiCompany o-- Driver
+
+Car <|-- GasolineUser
+Car <|-- Electric
+Car <|-- SelfDriving
+
+Driver *-- Experience
+
+@enduml
